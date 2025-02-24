@@ -86,15 +86,15 @@ function sendVerificationEmail($email, $code) {
 	$mail = new PHPMailer(true);
 	try {
 		$mail->isSMTP();
-        $mail->Host = getenv('SMTP_HOST');
+        $mail->Host = ${{ secrets.SMTP_HOST }};
         $mail->SMTPAuth = true;
-        $mail->Username = getenv('SMTP_USERNAME');
-        $mail->Password = getenv('SMTP_PASSWORD');
+        $mail->Username = ${{ secrets.SMTP_USERNAME }};
+        $mail->Password = ${{ secrets.SMTP_PASSWORD }};
         $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
-        $mail->Port = getenv('SMTP_PORT');
-        $mail->setFrom(getenv('SMTP_FROM_EMAIL'), getenv('SMTP_FROM_NAME'));
+        $mail->Port = ${{ secrets.SMTP_PORT }};
+        $mail->setFrom(${{ secrets.SMTP_FROM_EMAIL }}, ${{ secrets.SMTP_FROM_NAME }});
         $mail->addAddress($email);
-        $verifyLink = getenv('APP_URL') . "/verify?code=$code";
+        $verifyLink = ${{ secrets.APP_URL }} . "/verify?code=$code";
 
         $mail->isHTML(true);
         $mail->Subject = 'Welcome to matSFX!';
